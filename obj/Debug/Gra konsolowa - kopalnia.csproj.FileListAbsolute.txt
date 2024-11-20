@@ -1,0 +1,7 @@
+C:\Users\admin\source\repos\Gra konsolowa - kopalnia\bin\Debug\Gra konsolowa - kopalnia.exe.config
+C:\Users\admin\source\repos\Gra konsolowa - kopalnia\bin\Debug\Gra konsolowa - kopalnia.exe
+C:\Users\admin\source\repos\Gra konsolowa - kopalnia\bin\Debug\Gra konsolowa - kopalnia.pdb
+C:\Users\admin\source\repos\Gra konsolowa - kopalnia\obj\Debug\Gra konsolowa - kopalnia.csproj.AssemblyReference.cache
+C:\Users\admin\source\repos\Gra konsolowa - kopalnia\obj\Debug\Gra konsolowa - kopalnia.csproj.CoreCompileInputs.cache
+C:\Users\admin\source\repos\Gra konsolowa - kopalnia\obj\Debug\Gra konsolowa - kopalnia.exe
+C:\Users\admin\source\repos\Gra konsolowa - kopalnia\obj\Debug\Gra konsolowa - kopalnia.pdb
