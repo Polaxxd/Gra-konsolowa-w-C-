@@ -1,0 +1,7 @@
+C:\Users\admin\source\repos\Gra_konsolowa_kopalnia\bin\Debug\Gra_konsolowa_kopalnia.exe.config
+C:\Users\admin\source\repos\Gra_konsolowa_kopalnia\bin\Debug\Gra_konsolowa_kopalnia.exe
+C:\Users\admin\source\repos\Gra_konsolowa_kopalnia\bin\Debug\Gra_konsolowa_kopalnia.pdb
+C:\Users\admin\source\repos\Gra_konsolowa_kopalnia\obj\Debug\Gra_konsolowa_kopalnia.csproj.AssemblyReference.cache
+C:\Users\admin\source\repos\Gra_konsolowa_kopalnia\obj\Debug\Gra_konsolowa_kopalnia.csproj.CoreCompileInputs.cache
+C:\Users\admin\source\repos\Gra_konsolowa_kopalnia\obj\Debug\Gra_konsolowa_kopalnia.exe
+C:\Users\admin\source\repos\Gra_konsolowa_kopalnia\obj\Debug\Gra_konsolowa_kopalnia.pdb

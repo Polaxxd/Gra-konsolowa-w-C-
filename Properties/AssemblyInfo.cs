@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Ogólne informacje o zestawie są kontrolowane poprzez następujący 
 // zestaw atrybutów. Zmień wartości tych atrybutów, aby zmodyfikować informacje
 // powiązane z zestawem.
-[assembly: AssemblyTitle("Gra konsolowa - kopalnia")]
+[assembly: AssemblyTitle("Gra_konsolowa_kopalnia")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Gra konsolowa - kopalnia")]
+[assembly: AssemblyProduct("Gra_konsolowa_kopalnia")]
 [assembly: AssemblyCopyright("Copyright ©  2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Następujący identyfikator GUID jest identyfikatorem biblioteki typów w przypadku udostępnienia tego projektu w modelu COM
-[assembly: Guid("779c4264-8abd-4c6f-8c26-fadc36406371")]
+[assembly: Guid("90a6a7ee-b2ec-4d93-b17e-4d2c56973376")]
 
 // Informacje o wersji zestawu zawierają następujące cztery wartości:
 //
