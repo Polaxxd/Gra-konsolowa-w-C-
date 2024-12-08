@@ -5,16 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Gra_konsolowa_kopalnia
 {
     internal class Komunikaty
     {
         private Gracz gracz;
-
+        private Wybory wybory;
+        private Grafiki grafiki;
+        
         public Komunikaty(Gracz gracz)
         {
             this.gracz = gracz;
+            grafiki = new Grafiki();
+            wybory = new Wybory();
         }
 
         public void PrzypisanieNicku(string nick)
@@ -54,10 +59,19 @@ namespace Gra_konsolowa_kopalnia
             Console.SetCursorPosition(x, y);
             Console.BackgroundColor = ConsoleColor.DarkGreen;
             Console.ForegroundColor = ConsoleColor.Black;
-            if (text.Length > 50)
+
+            // Maksymalna długość tekstu w jednej linii
+            int maxLength = 50;
+
+            if (text.Length > maxLength)
             {
-                Console.WriteLine("za długi tekst");
-                // jak jest za długi tp podzielić na 2 i wywołać centered tekst (pierwsza część) ceneteredtekst(druga czesc) <- i trzeba jakoś skipnąć kolejną linię w pętli
+                int splitIndex = FindSplitIndex(text, maxLength);
+
+                string part1 = text.Substring(0, splitIndex).Trim();
+                string part2 = text.Substring(splitIndex).Trim();
+
+                CentrowanyTekst(x, y, part1);
+                CentrowanyTekst(x, y + 1, part2);
             }
             else
             {
@@ -68,35 +82,116 @@ namespace Gra_konsolowa_kopalnia
                 {
                     nowy_tekst += " ";
                 }
-                Console.WriteLine(nowy_tekst);
+                PisanyTekst(nowy_tekst);
             }
 
+            Console.BackgroundColor = ConsoleColor.Black;
         }
 
-        void WyswietlanieWiadomosci()
+        int FindSplitIndex(string text, int maxLength)
         {
-
-        }
-
-        public void WiadomoscPowitalna(string nick, int n, int k)
-        {
-            List<string> wiadomoscPowitalna = new List<string>
+            int newlineIndex = text.LastIndexOf('\n', maxLength);
+            if (newlineIndex != -1)
             {
-                " ",
-                "Witaj " + nick + "!",
-                "Trafiłeś do opuszczonej kopalni Stonemine.",
-                "Aby przeżyć, musisz dotrzeć do wyjścia,",
-                "wykonując po drodze rozmaite zadania.",
-                "Musisz się śpieszyć. ",
-                " "
+                return newlineIndex + 1; // Uwaga: +1 aby nie zgubić następnej linii
+            }
+
+            int spaceIndex = text.LastIndexOf(' ', maxLength);
+            if (spaceIndex != -1)
+            {
+                return spaceIndex;
+            }
+
+            return maxLength;
+        }
+
+
+        void PisanyTekst(string text)
+        {
+            foreach (var litera in text)
+            {
+                Console.Write(litera);
+                if (litera==' ' || litera=='\n')
+                {
+                    Thread.Sleep(4);
+                }
+                else
+                {
+                    Thread.Sleep(24);
+                }
+                
+            }
+            Console.WriteLine();
+        }
+
+        //public void WiadomoscPowitalna(string nick, int n, int k)
+        //{
+        //    List<string> wiadomoscPowitalna = new List<string>
+        //    {
+        //        " ",
+        //        "Witaj " + nick + "!",
+        //        "Trafiłeś do opuszczonej kopalni Stonemine.",
+        //        "Aby przeżyć, musisz dotrzeć do wyjścia,",
+        //        "wykonując po drodze rozmaite zadania.",
+        //        "Musisz się śpieszyć. ",
+        //        " "
+        //    };
+
+        //    for (int i = 0; i < wiadomoscPowitalna.Count; i++)
+        //    {
+        //        CentrowanyTekst(n, k + i, wiadomoscPowitalna[i]);
+        //    }
+
+        //}
+
+        public void WiadomoscPowitalna(string nick, string motyw)
+        {
+            int n = 70;
+            int k = 21;
+            PisanyTekst("\t\t\t\t\t\tWitaj " + nick + "!");
+            List<string> tab = new List<string>
+            {
+                "Trafiłeś do opuszczonej kopalni Stonemine. Aby przeżyć, musisz dotrzeć do wyjścia, wykonując po drodze rozmaite zadania.",
+                "Musisz się śpieszyć. Szanse na przeżycie pod ziemią maleją z każdą chwilą.",
+                "W kopalni możesz spotkać 2 rodzaje stworzeń: gobliny i potwory.", 
+                "Gobliny chętnie udzielą Ci pomocy, ponieważ chcą, żebyś jak najszybciej wydostał się z kopalni. Nie nadużywaj jednak ich gościnności - pamiętaj, nie jesteś tu mile widziany.",
+                "Uważaj na potwory. Są wygłodniałe i gustują w ludzkim mięsie. W większości sytuacji możesz przemknąć koło nich niezauważony, jeśli jednak zdecydujesz się stanąć z nimi do walki i zwycieżysz, zaskarbisz sobie wdzieczność goblinów i zdobędziesz dodatkowe punkty.",
+                "Nie zgub się w labiryncie korytarzy i staraj się wykonywać zadania jak najszybciej, by zdobyć więcej punktów.",
+                "Powodzenia!"
             };
 
-            for (int i = 0; i < wiadomoscPowitalna.Count; i++)
-            {
-                CentrowanyTekst(n, k + i, wiadomoscPowitalna[i]);
-            }
 
+            int licznik = 0;
+            grafiki.GornyPasek(gracz.NickGracza, gracz.Punkty);
+            grafiki.Korytarz();
+            CentrowanyTekst(n, k, tab[licznik]);
+
+
+            while (licznik < tab.Count)
+            {
+                char decyzja = wybory.WyborDalejWstecz(0, 45);
+                switch (decyzja)
+                {
+                    case 'd':
+                        licznik++;
+                        if (licznik == tab.Count) return; 
+                        Console.Clear();
+                        grafiki.GornyPasek(gracz.NickGracza, gracz.Punkty);
+                        grafiki.Korytarz();
+                        CentrowanyTekst(n, k, tab[licznik]);;
+                        break;
+
+                    case 'w':
+                        if (licznik > 0) licznik--; 
+                        Console.Clear();
+                        grafiki.GornyPasek(gracz.NickGracza, gracz.Punkty);
+                        grafiki.Korytarz();
+                        CentrowanyTekst(n, k, tab[licznik]);
+                        break;
+                }
+            }
         }
+
 
         public void InstrukcjaBiegu(int n, int k)
         {

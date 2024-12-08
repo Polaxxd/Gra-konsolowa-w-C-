@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Gra_konsolowa_kopalnia
 {
@@ -59,7 +60,7 @@ namespace Gra_konsolowa_kopalnia
             var decorator = "\u001b[32m → ";
             ConsoleKeyInfo key;
             bool isSelected = false;
-            List<string> listaKolorow = new List<string>
+            List<string> listaOpcji = new List<string>
             {
                 "Zielony",
                 "Żółty",
@@ -73,9 +74,9 @@ namespace Gra_konsolowa_kopalnia
                 Console.CursorVisible = false;
                 Console.SetCursorPosition(left, top);
 
-                for (int i = 0; i < listaKolorow.Count; i++)
+                for (int i = 0; i < listaOpcji.Count; i++)
                 {
-                    Console.WriteLine($"{(option == i ? decorator : "   ")}" +listaKolorow[i]+"\u001b[0m");
+                    Console.WriteLine($"{(option == i ? decorator : "   ")}" +listaOpcji[i]+"\u001b[0m");
                 }
 
                 //Console.WriteLine($"{(option == 1 ? decorator : "   ")}Zielony\u001b[0m");
@@ -89,11 +90,11 @@ namespace Gra_konsolowa_kopalnia
                 switch (key.Key)
                 {
                     case ConsoleKey.UpArrow:
-                        option = option == 0 ? listaKolorow.Count : option - 1;
+                        option = option == 0 ? listaOpcji.Count : option - 1;
                         break;
 
                     case ConsoleKey.DownArrow:
-                        option = option == listaKolorow.Count ? 0 : option + 1;
+                        option = option == listaOpcji.Count ? 0 : option + 1;
                         break;
 
                     case ConsoleKey.Enter:
@@ -104,32 +105,81 @@ namespace Gra_konsolowa_kopalnia
 
             Console.WriteLine($"\n{decorator}You selected Option {option}");
 
-            string chosenColour = "";
+            string chosenOption = "";
             switch (option)
             {
                 case 0:
-                    chosenColour = "\u001b[32m"; //zielony
+                    chosenOption = "\u001b[32m"; //zielony
                     break;
 
                 case 1:
-                    chosenColour = "\u001b[33m"; //żółty
+                    chosenOption = "\u001b[33m"; //żółty
                     break;
 
                 case 2:
-                    chosenColour = "\u001b[36m"; //niebieski
+                    chosenOption = "\u001b[36m"; //niebieski
                     break;
 
                 case 3:
-                    chosenColour = "\u001b[31m"; //czerwony
+                    chosenOption = "\u001b[31m"; //czerwony
                     break;
 
                 case 4:
-                    chosenColour = "\u001b[37m"; //biały
+                    chosenOption = "\u001b[37m"; //biały
                     break;
             }
 
-            this.wybranyMotyw = chosenColour;
+            wybranyMotyw = chosenOption;
         }
-        
+
+
+        public char WyborDalejWstecz(int left, int top)
+        {
+            Console.SetCursorPosition(left, top);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("\nUżyj strzałek ↑ i ↓ do poruszania i naciśnij Enter żeby wybrać opcję:");
+            //(int left, int top) = (Console.CursorLeft, Console.CursorTop + 1) ; // Pobiera aktualną pozycję kursora
+            (left, top) = (0, Console.CursorTop + 1);
+
+            var option = 0;
+            var decorator = "\u001b[32m → ";
+            ConsoleKeyInfo key;
+            bool isSelected = false;
+            List<string> listaOpcji = new List<string> { "Dalej", "Wstecz" };
+
+            while (!isSelected)
+            {
+                Console.SetCursorPosition(left, top);
+                for (int i = 0; i < listaOpcji.Count; i++)
+                {
+                    Console.WriteLine($"{(option == i ? decorator : "   ")}{listaOpcji[i]}\u001b[0m");
+                }
+
+                key = Console.ReadKey(true);
+
+                switch (key.Key)
+                {
+                    case ConsoleKey.UpArrow:
+                        option = (option - 1 + listaOpcji.Count) % listaOpcji.Count;
+                        break;
+
+                    case ConsoleKey.DownArrow:
+                        option = (option + 1) % listaOpcji.Count; 
+                        break;
+
+                    case ConsoleKey.Enter:
+                        isSelected = true; 
+                        break;
+                }
+            }
+
+            return option == 0 ? 'd' : 'w';
+        }
+
+
+
+
+
+
     }
 }
