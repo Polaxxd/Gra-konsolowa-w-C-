@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Gra_konsolowa_kopalnia
@@ -15,6 +16,34 @@ namespace Gra_konsolowa_kopalnia
             Console.WriteLine("\t\t\t_______________________________________________________________________________________________________________________________________________");
             Console.WriteLine("\t\t\tGracz: " + Nick + "\t\t\t\t\t\t\t\t\t\t\t                                 Punkty: " + Punkty);
             Console.WriteLine("\t\t\t_______________________________________________________________________________________________________________________________________________");
+        }
+
+        public void napisStart()
+        {
+            bool miganie = true;
+
+            // Uruchamiamy w osobnym wątku nasłuchiwanie na dowolny klawisz
+            Thread keyListener = new Thread(() =>
+            {
+                Console.ReadKey(true);
+                miganie = false; // Ustawienie flagi do zakończenia migania
+            });
+            keyListener.IsBackground = true; // Wątek zakończy się, gdy aplikacja zostanie zamknięta
+            keyListener.Start();
+
+            // Miganie napisu "START"
+            while (miganie)
+            {
+                //Console.Clear();
+                Console.CursorVisible = false;
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.SetCursorPosition(90, 38);
+                Console.Write(">>START<<");  
+                Thread.Sleep(700);
+                Console.SetCursorPosition(90, 38);
+                Console.Write("         ");
+                Thread.Sleep(500); 
+            }
         }
 
         public void StoneMine()
@@ -59,6 +88,7 @@ namespace Gra_konsolowa_kopalnia
     "\t\t\t▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒\n" +
     "\t\t\t▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒\n" 
 );
+            napisStart();
         }
 
         public void Korytarz()

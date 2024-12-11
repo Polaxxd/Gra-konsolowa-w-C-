@@ -9,6 +9,7 @@ namespace Gra_konsolowa_kopalnia
 {
     internal class Wybory
     {
+
         public string wybranyMotyw { get; set; }
 
         // Szablon
@@ -50,7 +51,9 @@ namespace Gra_konsolowa_kopalnia
 
 //              Console.WriteLine($"\n{decorator}You selected Option {option}");
     
-            public void WyborMotywu()
+            
+        
+        public void WyborMotywu()
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
             //Console.WriteLine("←→↑↓");
@@ -76,7 +79,7 @@ namespace Gra_konsolowa_kopalnia
 
                 for (int i = 0; i < listaOpcji.Count; i++)
                 {
-                    Console.WriteLine($"{(option == i ? decorator : "   ")}" +listaOpcji[i]+"\u001b[0m");
+                    Console.WriteLine($"{(option == i ? "\t\t\t"+decorator : "\t\t\t   ")}" +listaOpcji[i]+"\u001b[0m");
                 }
 
                 //Console.WriteLine($"{(option == 1 ? decorator : "   ")}Zielony\u001b[0m");
@@ -102,8 +105,6 @@ namespace Gra_konsolowa_kopalnia
                         break;
                 }
             }
-
-            Console.WriteLine($"\n{decorator}You selected Option {option}");
 
             string chosenOption = "";
             switch (option)

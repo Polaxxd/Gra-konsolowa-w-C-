@@ -25,20 +25,18 @@ namespace Gra_konsolowa___kopalnia
             Bieg bieg = new Bieg();
             //bieg.uruchomBieg();
 
+            // strona startowa
             grafiki.StoneMine();
-            
-            wybory.WyborMotywu();
             Console.Clear();
-            Console.WriteLine("\u001b[0m motyw: " + wybory.wybranyMotyw + "wybrany");
-            Thread.Sleep(2000);
+
+            //wybór motywu
+            wybory.WyborMotywu();
+            Console.WriteLine(wybory.wybranyMotyw + "Motyw wybrany!");
+            Thread.Sleep(1500);
             Console.Clear();
 
             Console.CursorVisible = false;
             
-            //Console.ReadLine();
-
-
-
             komunikaty.PodawanieNicku();
             komunikaty.PrzypisanieNicku(komunikaty.Nick());
 
