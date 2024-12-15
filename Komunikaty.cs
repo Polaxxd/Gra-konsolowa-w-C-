@@ -47,8 +47,7 @@ namespace Gra_konsolowa_kopalnia
                 Console.Write("\t\t\t\t\t\t\t\tNick musi miec dlugosc od 4 do 10 liter. Podaj nick: ");
                 NickGracza = Console.ReadLine();
             }
-            Console.WriteLine("\n\n\n");
-            Console.WriteLine("Nick zaakceptopwany.");
+            Console.WriteLine("\n\n\t\t\t\t\t\t\t\t\t\tNick zaakceptopwany.");
             Thread.Sleep(2000);
             Console.Clear();
             return NickGracza;
@@ -57,7 +56,7 @@ namespace Gra_konsolowa_kopalnia
         void CentrowanyTekst(int x, int y, string text)
         {
             Console.SetCursorPosition(x, y);
-            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
 
             // Maksymalna długość tekstu w jednej linii
@@ -148,43 +147,48 @@ namespace Gra_konsolowa_kopalnia
         {
             int n = 70;
             int k = 21;
-            PisanyTekst("\t\t\t\t\t\tWitaj " + nick + "!");
+            PisanyTekst(motyw+ "\t\t\t\t\t\tWitaj " + nick + "!");
             List<string> tab = new List<string>
             {
                 "Trafiłeś do opuszczonej kopalni Stonemine. Aby przeżyć, musisz dotrzeć do wyjścia, wykonując po drodze rozmaite zadania.",
-                "Musisz się śpieszyć. Szanse na przeżycie pod ziemią maleją z każdą chwilą.",
-                "W kopalni możesz spotkać 2 rodzaje stworzeń: gobliny i potwory.", 
-                "Gobliny chętnie udzielą Ci pomocy, ponieważ chcą, żebyś jak najszybciej wydostał się z kopalni. Nie nadużywaj jednak ich gościnności - pamiętaj, nie jesteś tu mile widziany.",
-                "Uważaj na potwory. Są wygłodniałe i gustują w ludzkim mięsie. W większości sytuacji możesz przemknąć koło nich niezauważony, jeśli jednak zdecydujesz się stanąć z nimi do walki i zwycieżysz, zaskarbisz sobie wdzieczność goblinów i zdobędziesz dodatkowe punkty.",
-                "Nie zgub się w labiryncie korytarzy i staraj się wykonywać zadania jak najszybciej, by zdobyć więcej punktów.",
+                //"Musisz się śpieszyć. Szanse na przeżycie pod ziemią maleją z każdą chwilą.",
+                //"W kopalni możesz spotkać 2 rodzaje stworzeń: gobliny i potwory.", 
+                //"Gobliny chętnie udzielą Ci pomocy, ponieważ chcą, żebyś jak najszybciej wydostał się z kopalni. Nie nadużywaj jednak ich gościnności - pamiętaj, nie jesteś tu mile widziany.",
+                //"Uważaj na potwory. Są wygłodniałe i gustują w ludzkim mięsie. W większości sytuacji możesz przemknąć koło nich niezauważony, jeśli jednak zdecydujesz się stanąć z nimi do walki i zwycieżysz, zaskarbisz sobie wdzieczność goblinów i zdobędziesz dodatkowe punkty.",
+                //"Nie zgub się w labiryncie korytarzy i staraj się wykonywać zadania jak najszybciej, by zdobyć więcej punktów.",
                 "Powodzenia!"
             };
 
 
             int licznik = 0;
             grafiki.GornyPasek(gracz.NickGracza, gracz.Punkty);
+            Console.ForegroundColor = ConsoleColor.White;
             grafiki.Korytarz();
             CentrowanyTekst(n, k, tab[licznik]);
 
 
             while (licznik < tab.Count)
             {
-                char decyzja = wybory.WyborDalejWstecz(0, 45);
+                char decyzja = wybory.WyborDalejWstecz(0, 45, motyw);
                 switch (decyzja)
                 {
                     case 'd':
                         licznik++;
-                        if (licznik == tab.Count) return; 
+                        if (licznik == tab.Count) return;
+                        Console.Write(motyw);
                         Console.Clear();
                         grafiki.GornyPasek(gracz.NickGracza, gracz.Punkty);
+                        Console.ForegroundColor = ConsoleColor.White;
                         grafiki.Korytarz();
                         CentrowanyTekst(n, k, tab[licznik]);;
                         break;
 
                     case 'w':
-                        if (licznik > 0) licznik--; 
+                        if (licznik > 0) licznik--;
+                        Console.Write(motyw);
                         Console.Clear();
                         grafiki.GornyPasek(gracz.NickGracza, gracz.Punkty);
+                        Console.ForegroundColor = ConsoleColor.White;
                         grafiki.Korytarz();
                         CentrowanyTekst(n, k, tab[licznik]);
                         break;

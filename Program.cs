@@ -14,6 +14,8 @@ namespace Gra_konsolowa___kopalnia
 
         static void Main(string[] args)
         {
+            //Console.WriteLine("\u001b[36;1m cyan");
+            // \u001b[36m
             //ustawienie wielkości okna
             Console.SetWindowSize(190, 50);
 
@@ -26,11 +28,12 @@ namespace Gra_konsolowa___kopalnia
             //bieg.uruchomBieg();
 
             // strona startowa
-            grafiki.StoneMine();
+            //grafiki.StoneMine();
             Console.Clear();
 
             //wybór motywu
             wybory.WyborMotywu();
+            Console.SetCursorPosition(20, 17);
             Console.WriteLine(wybory.wybranyMotyw + "Motyw wybrany!");
             Thread.Sleep(1500);
             Console.Clear();
@@ -42,6 +45,7 @@ namespace Gra_konsolowa___kopalnia
 
 
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.White;
             ////belka na górze (nagłówek)
             //string linia = new string('_', 146);
             //Console.WriteLine("\t\t\t" + linia);
@@ -56,6 +60,10 @@ namespace Gra_konsolowa___kopalnia
 
             //komunikaty.WiadomoscPowitalna(gracz.NickGracza, n, k);
             komunikaty.WiadomoscPowitalna(gracz.NickGracza, wybory.wybranyMotyw);
+            Console.Clear();
+            grafiki.rysGoblin1(wybory.wybranyMotyw, gracz.NickGracza, gracz.Punkty);
+            grafiki.Korytarze(wybory.wybranyMotyw, gracz.NickGracza, gracz.Punkty);
+
 
 
 
