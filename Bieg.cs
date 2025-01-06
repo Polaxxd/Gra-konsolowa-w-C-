@@ -10,7 +10,7 @@ namespace Gra_konsolowa_kopalnia
     internal class Bieg
     {
 
-        public void uruchomBieg()
+        public int uruchomBieg()
         {
 
             Console.Clear();
@@ -33,7 +33,7 @@ namespace Gra_konsolowa_kopalnia
             try
             {
                 //LaunchScreen();
-                while (keepPlaying)
+                while (keepPlaying && score<=300)
                 {
                     InitializeScene();
                     while (gameRunning)
@@ -45,11 +45,17 @@ namespace Gra_konsolowa_kopalnia
                         {
                             Thread.Sleep(TimeSpan.FromMilliseconds(speed));
                         }
+                        if (score >= 300)
+                        {
+                            keepPlaying = false;
+                            return 300;
+                        }
                     }
                     if (keepPlaying)
                     {
-                        GameOverScreen();
+                        return score;
                     }
+                    
                 }
                 Console.Clear();
             }
@@ -154,26 +160,20 @@ namespace Gra_konsolowa_kopalnia
                 }
             }
 
-            void GameOverScreen()
-            {
-                Console.SetCursorPosition(0, 0);
-                Console.WriteLine("Game Over");
-                Console.WriteLine($"Score: {score}");
-                Console.WriteLine($"Play Again (Y/N)?");
-            GetInput:
-                ConsoleKey key2 = Console.ReadKey(true).Key;
-                switch (key2)
-                {
-                    case ConsoleKey.Y:
-                        keepPlaying = true;
-                        break;
-                    case ConsoleKey.Escape:
-                        keepPlaying = false;
-                        break;
-                    default:
-                        goto GetInput;
-                }
-            }
+            //void GameOverScreen()
+            //{
+            //    Console.Clear();
+            //    Console.WriteLine("Niestety, wbiegłeś w ścianę i potwór Cię dopadł. Gra skończona. Przejdź dalej, żeby poznać wynik.");
+            //    Console.ReadKey();
+
+            //}
+
+            //void GameWonScreen()
+            //{
+            //    Console.Clear();
+            //    Console.WriteLine("Gratulacje. Udało Ci się uciec przed potworem. Uważaj następnym razem!");
+            //    Console.ReadKey();
+            //}
 
             void Update()
             {
@@ -216,20 +216,22 @@ namespace Gra_konsolowa_kopalnia
                 score++;
             }
 
-            void PressEnterToContinue()
-            {
-            GetInput:
-                ConsoleKey key3 = Console.ReadKey(true).Key;
-                switch (key3)
-                {
-                    case ConsoleKey.Enter:
-                        break;
-                    case ConsoleKey.Escape:
-                        keepPlaying = false;
-                        break;
-                    default: goto GetInput;
-                }
-            }
+            //void PressEnterToContinue()
+            //{
+            //GetInput:
+            //    ConsoleKey key3 = Console.ReadKey(true).Key;
+            //    switch (key3)
+            //    {
+            //        case ConsoleKey.Enter:
+            //            break;
+            //        case ConsoleKey.Escape:
+            //            keepPlaying = false;
+            //            break;
+            //        default: goto GetInput;
+            //    }
+            //}
+
+            return 0;
 
         }
     }

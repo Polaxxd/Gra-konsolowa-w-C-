@@ -22,9 +22,13 @@ namespace Gra_konsolowa_kopalnia
             wybory = new Wybory();
         }
 
+        public Komunikaty() { }
+
         public void PrzypisanieNicku(string nick)
         {
             gracz.NickGracza = nick;
+            grafiki = new Grafiki();
+            wybory = new Wybory();
         }
 
         public void PodawanieNicku()
@@ -42,14 +46,23 @@ namespace Gra_konsolowa_kopalnia
             Console.Write("\n\t\t\t\t\t\t\t\t\t\t\t->  ");
             NickGracza = Console.ReadLine();
             Console.WriteLine("\n");
-            while (NickGracza.Length < 4 || NickGracza.Length > 10)
+            while (NickGracza.Length < 4 || NickGracza.Length > 8)
             {
-                Console.Write("\t\t\t\t\t\t\t\tNick musi miec dlugosc od 4 do 10 liter. Podaj nick: ");
+                Console.SetCursorPosition(80, 16);
+                Console.WriteLine("                                                           ");
+                Thread.Sleep(100);
+                Console.SetCursorPosition(80, 16);
+                Console.WriteLine("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tNick musi miec dlugosc od 4 do 8 znaków. ");
+
+                Console.SetCursorPosition(92, 14);
+                Console.Write("                            ");
+                Console.SetCursorPosition(92, 14);
                 NickGracza = Console.ReadLine();
             }
+
+            Console.WriteLine("                                                           ");
+            Thread.Sleep(100);
             Console.WriteLine("\n\n\t\t\t\t\t\t\t\t\t\tNick zaakceptopwany.");
-            Thread.Sleep(2000);
-            Console.Clear();
             return NickGracza;
         }
 
@@ -151,11 +164,11 @@ namespace Gra_konsolowa_kopalnia
             List<string> tab = new List<string>
             {
                 "Trafiłeś do opuszczonej kopalni Stonemine. Aby przeżyć, musisz dotrzeć do wyjścia, wykonując po drodze rozmaite zadania.",
-                //"Musisz się śpieszyć. Szanse na przeżycie pod ziemią maleją z każdą chwilą.",
-                //"W kopalni możesz spotkać 2 rodzaje stworzeń: gobliny i potwory.", 
-                //"Gobliny chętnie udzielą Ci pomocy, ponieważ chcą, żebyś jak najszybciej wydostał się z kopalni. Nie nadużywaj jednak ich gościnności - pamiętaj, nie jesteś tu mile widziany.",
-                //"Uważaj na potwory. Są wygłodniałe i gustują w ludzkim mięsie. W większości sytuacji możesz przemknąć koło nich niezauważony, jeśli jednak zdecydujesz się stanąć z nimi do walki i zwycieżysz, zaskarbisz sobie wdzieczność goblinów i zdobędziesz dodatkowe punkty.",
-                //"Nie zgub się w labiryncie korytarzy i staraj się wykonywać zadania jak najszybciej, by zdobyć więcej punktów.",
+                "Musisz się śpieszyć. Szanse na przeżycie pod ziemią maleją z każdą chwilą.",
+                "W kopalni możesz spotkać 2 rodzaje stworzeń: gobliny i potwory.",
+                "Gobliny chętnie udzielą Ci pomocy, ponieważ chcą, żebyś jak najszybciej wydostał się z kopalni. Nie nadużywaj jednak ich gościnności - pamiętaj, nie jesteś tu mile widziany.",
+                "Uważaj na potwory. Są wygłodniałe i gustują w ludzkim mięsie. W większości sytuacji możesz przemknąć koło nich niezauważony, jeśli jednak zdecydujesz się stanąć z nimi do walki i zwycieżysz, zaskarbisz sobie wdzieczność goblinów i zdobędziesz dodatkowe punkty.",
+                "Nie zgub się w labiryncie korytarzy i staraj się wykonywać zadania jak najszybciej, by zdobyć więcej punktów.",
                 "Powodzenia!"
             };
 
@@ -197,22 +210,162 @@ namespace Gra_konsolowa_kopalnia
         }
 
 
-        public void InstrukcjaBiegu(int n, int k)
+
+
+        public void InstrukcjaBiegu(int n, int k, string motyw)
         {
             List<string> instrukcjaBiegu = new List<string>
             {
-                " ",
                 "Potwór zaczął Cię gonić!",
                 "Musisz uciekać ciasnymi korytarzami.",
-                "Uważaj, żeby nie wbiec w ścianę",
-                "Używaj strzałek ← ↑ → żeby zmieniać kierunek.",
-                " "
+                "Uważaj, żeby nie wbiec w ścianę!",
+                "Używaj strzałek ← ↑ → żeby zmieniać kierunek."
             };
 
             for (int i = 0; i < instrukcjaBiegu.Count; i++)
             {
                 CentrowanyTekst(n, k + i, instrukcjaBiegu[i]);
             }
+
+
+            Console.SetCursorPosition(21, 45);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(motyw + "Naciśnij dowolny klawisz, żeby zacząć.");
+            Console.ReadKey();
+
+        }
+
+
+        public void WiadomoscWygranaWalka(string motyw, string nick, double punkty)
+        {
+            int n = 70;
+            int k = 21;
+            string tekst = "Gratulacje, udało Ci się pokonać potwora. Możesz ruszać w dalej, bogatszy o nowe doświadczenie.";
+
+            Console.Write(motyw);
+            grafiki.GornyPasek(nick, punkty);
+            Console.ForegroundColor = ConsoleColor.White;
+            grafiki.Korytarz();
+            CentrowanyTekst(n, k, tekst);
+            Console.SetCursorPosition(21, 45);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(motyw + "Naciśnij dowolny klawisz, żeby przejść dalej.");
+            Console.ReadKey();
+            Console.Clear();
+
+        }
+
+        public void WiadomoscPrzegranaWalka(string motyw, string nick, double punkty)
+        {
+            int n = 70;
+            int k = 21;
+            string tekst = "Ledwo udało Ci się ujść z życiem i odniosłeś poważne obrażenia. Uważaj następnym razem!";
+
+            Console.Write(motyw);
+            grafiki.GornyPasek(nick, punkty);
+            Console.ForegroundColor = ConsoleColor.White;
+            grafiki.Korytarz();
+            CentrowanyTekst(n, k, tekst);
+            Console.SetCursorPosition(21, 45);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(motyw + "Naciśnij dowolny klawisz, żeby przejść dalej.");
+            Console.ReadKey();
+            Console.Clear();
+
+        }
+
+        public void WiadomoscSkuteczkaUcieczka(string motyw, string nick, double punkty)
+        {
+            int n = 70;
+            int k = 21;
+            string tekst = "Było blisko, ale udało Ci się uciec przed potworem. Możesz ruszać w dalszą drogę.";
+
+            Console.Write(motyw);
+            grafiki.GornyPasek(nick, punkty);
+            Console.ForegroundColor = ConsoleColor.White;
+            grafiki.Korytarz();
+            CentrowanyTekst(n, k, tekst);
+            Console.SetCursorPosition(21, 45);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(motyw + "Naciśnij dowolny klawisz, żeby przejść dalej.");
+            Console.ReadKey();
+            Console.Clear();
+
+        }
+
+        public void WiadomoscNieskuteczkaUcieczka(string motyw, string nick, double punkty)
+        {
+            int n = 70;
+            int k = 21;
+            string tekst = "Niestety, wbiegłeś w ścianę i potwór cię dopadł. Twoja przygoda kończy się w tym miejscu, a twoje szczątki pozostaną w kopalni na zawsze.";
+
+            Console.Write(motyw);
+            grafiki.GornyPasek(nick, punkty);
+            Console.ForegroundColor = ConsoleColor.White;
+            grafiki.Korytarz();
+            CentrowanyTekst(n, k, tekst);
+            Console.SetCursorPosition(21, 45);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(motyw + "Naciśnij dowolny klawisz, żeby przejść do tablicy wyników.");
+            Console.ReadKey();
+            Console.Clear();
+
+        }
+
+        public void WiadomoscPrzemykanie(string motyw, string nick, double punkty)
+        {
+            int n = 70;
+            int k = 21;
+            string tekst = "Uff! Udało Ci się przemknąć koło potwora niezauważonym, choć było blisko. Uważaj następnym razem.";
+
+            Console.Write(motyw);
+            grafiki.GornyPasek(nick, punkty);
+            Console.ForegroundColor = ConsoleColor.White;
+            grafiki.Korytarz();
+            CentrowanyTekst(n, k, tekst);
+            Console.SetCursorPosition(21, 45);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(motyw + "Naciśnij dowolny klawisz, żeby przejść dalej.");
+            Console.ReadKey();
+            Console.Clear();
+
+        }
+
+        public void WiadomoscSmierc(string motyw, string nick, double punkty)
+        {
+            int n = 70;
+            int k = 21;
+            string tekst = "Niestety, w wyniku silnych obrażeń umierasz. Twoja przygoda kończy się w tym miejscu, a twoje szczątki pozostaną w kopalni na zawsze.";
+
+            Console.Write(motyw);
+            grafiki.GornyPasek(nick, punkty);
+            Console.ForegroundColor = ConsoleColor.White;
+            grafiki.Korytarz();
+            CentrowanyTekst(n, k, tekst);
+            Console.SetCursorPosition(21, 45);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(motyw + "Naciśnij dowolny klawisz, żeby przejść do tablicy wyników.");
+            Console.ReadKey();
+            Console.Clear();
+
+        }
+
+        public void WiadomoscWygrana(string motyw, string nick, double punkty)
+        {
+            int n = 70;
+            int k = 21;
+            string tekst = "GRATULACJE! Udało ci się wyjść cało z kopalni.";
+
+            Console.Write(motyw);
+            grafiki.GornyPasek(nick, punkty);
+            Console.ForegroundColor = ConsoleColor.White;
+            grafiki.Korytarz();
+            CentrowanyTekst(n, k, tekst);
+            Console.SetCursorPosition(21, 45);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(motyw + "Naciśnij dowolny klawisz, żeby przejść do tablicy wyników.");
+            Console.ReadKey();
+            Console.Clear();
 
         }
 
